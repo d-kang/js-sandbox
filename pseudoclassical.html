@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title></title>
+  </head>
+  <body>
+    <button id="root">
+      hi
+    </button>
+
+    <script>
+    const Dancer = function() {
+      this.hi = 'hello';
+      this.$node = document.getElementById('root');
+    }
+
+    Dancer.prototype.step = function() {
+      console.log('this.hi', this.hi);
+
+      var self = this;
+      this.$node.onclick = function() {
+        console.log(self.hi);
+      }
+    }
+
+
+    var dancer = new Dancer()
+    dancer.step()
+
+    </script>
+  </body>
+</html>
