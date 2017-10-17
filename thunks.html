@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>thunks</title>
+  </head>
+  <body>
+    Thunks
+
+    <script type="text/javascript">
+    // sync thunk
+      const mult = (x, y) => x * y;
+      const thunk = () => mult(10, 3);
+
+      thunk(); // 30
+
+    // async thunk
+    function async(a, b, cb) {
+      setTimeout(function() {
+        cb(a, b);
+      }, 2000);
+    }
+
+    function cb(a, b) {
+      console.log(a + b);
+    }
+
+    var thunk2 = function(cb) {
+      return async(10, 10, cb);
+    }
+
+    thunk2(cb); // 20
+    </script>
+  </body>
+</html>
