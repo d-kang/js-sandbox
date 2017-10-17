@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title></title>
+  </head>
+  <body>
+    https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/function*
+    
+
+    <script type="text/javascript">
+    console.log('hi')
+    function *myGeneratorFunc() {
+      yield 1
+      yield 2
+      yield 3
+      yield 4
+      return 5;
+    }
+
+    const save = myGeneratorFunc();
+
+    for (foo of save) {
+      console.log('foo', foo);
+    }
+
+    function *myGen2(num) {
+      const x = yield (num + 1);
+      const x = yield (num + 1);
+      const x = yield (num + 1);
+      const x = yield (num + 1);
+      const x = yield (num + 1);
+      const x = yield (num + 1);
+    }
+    const save2 = myGen2(0);
+    for (foo of save2) {
+
+    }
+
+    </script>
+  </body>
+</html>
