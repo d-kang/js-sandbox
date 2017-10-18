@@ -20,23 +20,25 @@
     class App extends React.Component {
       state = {
         count: 0,
-        numbers: [0,1,2,3],
+        numbers: [],
       }
 
       buttonClick = () => {
-        const _button = this._button
-        // Rx.Observable.fromEvent(_button, 'click')
-        const numbers = this.state.numbers
+        console.log('this.state.count', this.state.count);
+        console.log('this.state.numbers', this.state.numbers);
+        const countPlusOne = this.state.count + 1;
+        console.log('countPlusOne', countPlusOne);
+        const numbers = [...this.state.numbers, countPlusOne];
+        console.log('numbers', numbers);
+        this.setState({ numbers });
         const obs = Rx.Observable.from(numbers);
         obs
           .subscribe(count => {
-            console.log('count', count)
-            this.setState({count})
+            console.log('count', count);
+            this.setState({ count });
           });
       }
-      
       render() {
-
         return (
           <div>
             <h1>Welcome!</h1>
@@ -45,6 +47,11 @@
               onClick={this.buttonClick}
             >
               Observable Button
+            </button>
+            <button
+              onClick={this.addNumber}
+            >
+            Add Number
             </button>
             <br />
             Count: <div id="count">{this.state.count}</div>
