@@ -23,18 +23,19 @@
       }
 
       buttonClick = () => {
-        const button = this._button
-        Rx.Observable.fromEvent(button, 'click')
-          .scan(count => count + 1, 0)
+        const _button = this._button
+        // Rx.Observable.fromEvent(_button, 'click')
+        const obs = Rx.Observable.from([1,2,3]);
+        obs
           .subscribe(count => {
             console.log('count', count)
-            console.log('this.state.count++', this.state.count++)
-            this.setState({count: this.state.count++});
+            this.setState({count})
           });
       }
 
 
       render() {
+
         return (
           <div>
             <h1>Welcome!</h1>
