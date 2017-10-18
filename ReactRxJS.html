@@ -23,14 +23,13 @@
       }
 
       buttonClick = () => {
-        const button = document.querySelector('button');
+        const button = this._button
         Rx.Observable.fromEvent(button, 'click')
           .scan(count => count + 1, 0)
           .subscribe(count => {
             console.log('count', count)
-            let $count = document.querySelector('#count')
-            $count.innerHTML = count;
-            console.log('$count', $count);
+            console.log('this.state.count++', this.state.count++)
+            this.setState({count: this.state.count++});
           });
       }
 
@@ -39,8 +38,14 @@
         return (
           <div>
             <h1>Welcome!</h1>
-            <button onClick={this.buttonClick}>Observable Button</button> <br />
-            Count: <div id="count">0</div>
+            <button
+              ref={ref => this._button = ref}
+              onClick={this.buttonClick}
+            >
+              Observable Button
+            </button>
+            <br />
+            Count: <div id="count">{this.state.count}</div>
           </div>
         )
       }
