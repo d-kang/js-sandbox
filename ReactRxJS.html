@@ -33,6 +33,7 @@
         this.setState({ numbers });
         const obs = Rx.Observable.from(numbers);
         obs
+          .take(3)
           .subscribe(count => {
             console.log('count', count);
             this.setState({ count });
