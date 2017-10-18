@@ -26,14 +26,17 @@
       buttonClick = () => {
         console.log('this.state.count', this.state.count);
         console.log('this.state.numbers', this.state.numbers);
-        const countPlusOne = this.state.count + 1;
-        console.log('countPlusOne', countPlusOne);
-        const numbers = [...this.state.numbers, countPlusOne];
+        const action = {
+          value: this.state.count + 1,
+        }
+        console.log('action', action);
+        const numbers = [...this.state.numbers, action];
         console.log('numbers', numbers);
         this.setState({ numbers });
         const obs = Rx.Observable.from(numbers);
         obs
-          .take(3)
+          // .take(3)
+          .map(e => e.value)
           .subscribe(count => {
             console.log('count', count);
             this.setState({ count });
