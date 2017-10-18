@@ -28,7 +28,7 @@
 
     class App extends React.Component {
       state = {
-        recommendations: [],
+        recommendations: getRatings,
         fiveStar: [],
       }
 
@@ -38,9 +38,11 @@
             recommendations: [...this.state.recommendations, ...getRatings]
           }
         );
+        this.updateFiveStar();
       }
+
       myStore = []
-      buttonClick = () => {
+      updateFiveStar() {
         const obs = Rx.Observable.from(this.state.recommendations);
         obs
           .map(film => film)
@@ -51,6 +53,18 @@
               this.myStore = [];
             })
           });
+      }
+      buttonClick = () => {
+        const updates = [
+          {rating: 5, title: 'avengers', genre:'action'},
+          {rating: 2, title: 'justice league', genre:'action'},
+          {rating: 4, title: 'thor ragnarok', genre:'action'},
+          {rating: 5, title: 'black panther', genre:'action'},
+          {rating: 4, title: 'ant man', genre:'action'},
+          {rating: 3, title: 'venom', genre:'action'},
+          {rating: 5, title: 'star wars', genre:'comedy'},
+        ]
+        this.setState({recommendations: [...this.state.recommendations, updates]})
       }
       render() {
         return (
