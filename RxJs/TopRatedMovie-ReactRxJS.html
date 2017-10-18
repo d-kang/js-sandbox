@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>React RxJS</title>
+  </head>
+  <body>
+    <h1>React RxJS</h1>
+
+    <div id="root"></div>
+
+    <script crossorigin src="https://unpkg.com/react@16/umd/react.development.js"></script>
+    <script crossorigin src="https://unpkg.com/react-dom@16/umd/react-dom.development.js"></script>
+    <script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
+    <script src="https://unpkg.com/@reactivex/rxjs@5.0.0/dist/global/Rx.js" charset="utf-8"></script>
+
+
+    <script type="text/babel">
+    const getRatings = [
+      {rating: 5, title:'spiderman'},
+      {rating: 5, title: 'wolverine'},
+      {rating: 5, title: 'guardians'},
+      {rating: 3, title: 'batman v superman'},
+      {rating: 3, title: 'suicide squad'},
+      {rating: 3, title: 'guardians'},
+    ]
+
+    class App extends React.Component {
+      state = {
+        fiveStar: [],
+      }
+
+      componentDidMount() {
+        this.setState(
+          {
+            fiveStar: [...this.state.fiveStar, ...getRatings]
+          }
+        );
+      }
+
+      buttonClick = () => {
+        console.log('this.state.count', this.state.count);
+        console.log('this.state.fiveStar', this.state.fiveStar);
+        const action = {
+          value: this.state.count + 1,
+        }
+        console.log('action', action);
+        const fiveStar = [...this.state.fiveStar, action];
+        console.log('fiveStar', fiveStar);
+        this.setState({ fiveStar });
+        const obs = Rx.Observable.from(fiveStar);
+        obs
+          // .take(10)
+          .map(e => e.value)
+          .filter(count => count % 2)
+          .subscribe(count => {
+            console.log('count', count);
+          });
+      }
+      render() {
+        return (
+          <div>
+            <h1>Welcome!</h1>
+            <button
+              ref={ref => this._button = ref}
+              onClick={this.buttonClick}
+            >
+              Observable Button
+            </button>
+            <button
+              onClick={this.addNumber}
+            >
+            Add Number
+            </button>
+            <br />
+            <div>
+            {this.state.fiveStar.map(movie =>
+              <div>
+                {`Title: ${movie.title}`} <br/>
+                {`Rating: ${movie.rating}`}
+              </div>
+            )}
+            </div>
+          </div>
+        )
+      }
+    }
+
+
+
+
+      ReactDOM.render(<App />, document.getElementById('root'));
+    </script>
+  </body>
+</html>
