@@ -41,41 +41,16 @@
       }
       myStore = []
       buttonClick = () => {
-        // this.setState({ fiveStar: [] });
         const obs = Rx.Observable.from(this.state.recommendations);
         obs
-          // .take(10)
           .map(film => film)
           .filter(film => film.rating === 5 && film.genre === 'action')
           .subscribe(fiveStar => {
-            console.log('fiveStar', fiveStar);
-            console.log('this.state.fiveStar', this.state.fiveStar);
-            // this.setState({fiveStar: [...this.state.fiveStar, fiveStar]}, () => {console.log('this.state.fiveStar', this.state.fiveStar)});
-
             this.myStore.push(fiveStar)
             this.setState({fiveStar: [...this.myStore]}, () => {
               this.myStore = [];
             })
           });
-
-
-        // console.log('this.state.count', this.state.count);
-        // console.log('this.state.fiveStar', this.state.fiveStar);
-        // const action = {
-        //   value: this.state.count + 1,
-        // }
-        // console.log('action', action);
-        // const fiveStar = [...this.state.fiveStar, action];
-        // console.log('fiveStar', fiveStar);
-        // this.setState({ fiveStar });
-        // const obs = Rx.Observable.from(fiveStar);
-        // obs
-        //   // .take(10)
-        //   .map(e => e.value)
-        //   .filter(count => count % 2)
-        //   .subscribe(count => {
-        //     console.log('count', count);
-        //   });
       }
       render() {
         return (
