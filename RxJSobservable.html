@@ -16,6 +16,7 @@
     <script type="text/javascript">
       let ob = Rx.Observable.of('foo', 'bar');
 
+      // button observable
       const button = document.querySelector('button');
       Rx.Observable.fromEvent(button, 'click')
         .scan(count => count + 1, 0)
@@ -26,18 +27,12 @@
           console.log('$count', $count);
         });
 
-      Rx.Observable.fromEvent(
-        document.querySelector
-      ('button'), 'click', function(a){console.log('hi', a)});
 
+      // input observable
       const input = Rx.Observable.fromEvent(
         document.querySelector('input'),
         'input'
       );
-
-      // input.map(event => event.target.value)
-      //   .subscribe(value => console.log('hi'));
-
       input.map(
         (event, index) => {
           console.log('event', event);

@@ -18,8 +18,31 @@
     <script type="text/babel">
 
     class App extends React.Component {
+      state = {
+        count: 0,
+      }
+
+      buttonClick = () => {
+        const button = document.querySelector('button');
+        Rx.Observable.fromEvent(button, 'click')
+          .scan(count => count + 1, 0)
+          .subscribe(count => {
+            console.log('count', count)
+            let $count = document.querySelector('#count')
+            $count.innerHTML = count;
+            console.log('$count', $count);
+          });
+      }
+
+
       render() {
-        return <div>hi</div>
+        return (
+          <div>
+            <h1>Welcome!</h1>
+            <button onClick={this.buttonClick}>Observable Button</button> <br />
+            Count: <div id="count">0</div>
+          </div>
+        )
       }
     }
 
