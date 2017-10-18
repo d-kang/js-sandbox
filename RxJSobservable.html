@@ -6,47 +6,49 @@
     <script src="https://unpkg.com/@reactivex/rxjs@5.0.0/dist/global/Rx.js" charset="utf-8"></script>
   </head>
   <body>
-    <p>
-      <h1>Rx Observables </h1>
-<button>Observable Button</button>
-<input type="text">
-      <div>
-        <h2>Rx keys</h2>
-        ["Scheduler", "Symbol", "Subject", "AnonymousSubject", "Observable", "Subscription", "Subscriber", "AsyncSubject", "ReplaySubject", "BehaviorSubject", "ConnectableObservable", "Notification", "EmptyError", "ArgumentOutOfRangeError", "ObjectUnsubscribedError", "TimeoutError", "UnsubscriptionError", "TimeInterval", "Timestamp", "TestScheduler", "VirtualTimeScheduler", "AjaxResponse", "AjaxError", "AjaxTimeoutError"]
-      </div>
-      <div>
-        <h2>Observable Keys</h2>
-        ["create", "bindCallback", "bindNodeCallback", "combineLatest", "concat", "defer", "empty", "forkJoin", "from", "fromEvent", "fromEventPattern", "fromPromise", "generate", "if", "interval", "merge", "race", "never", "of", "onErrorResumeNext", "pairs", "range", "using", "throw", "timer", "zip", "ajax", "webSocket"]
-      </div>
 
-      <div>
-        <h2>Observer</h2>
-  ["lift","subscribe","forEach","_subscribe","buffer","bufferCount","bufferTime","bufferToggle","bufferWhen","catch","_catch","combineAll","combineLatest","concat","concatAll","concatMap","concatMapTo","count","dematerialize","debounce","debounceTime","defaultIfEmpty","delay","delayWhen","distinct","distinctUntilChanged","distinctUntilKeyChanged","do","_do","exhaust","exhaustMap","expand","elementAt","filter","finally","_finally","find","findIndex","first","groupBy","ignoreElements","isEmpty","audit","auditTime","last","let","letBind","every","map","mapTo","materialize","max","merge","mergeAll","mergeMap","flatMap","flatMapTo","mergeMapTo","mergeScan","min","multicast","observeOn","onErrorResumeNext","pairwise","partition","pluck","publish","publishBehavior","publishReplay","publishLast","race","reduce","repeat","repeatWhen","retry","retryWhen","sample","sampleTime","scan","sequenceEqual","share","single","skip","skipUntil","skipWhile","startWith","subscribeOn","switch","_switch","switchMap","switchMapTo","take","takeLast","takeUntil","takeWhile","throttle","throttleTime","timeInterval","timeout","timeoutWith","timestamp","toArray","toPromise","window","windowCount","windowTime","windowToggle","windowWhen","withLatestFrom","zip","zipAll"]
-  </div>
+    <h1>Rx Observables </h1>
+    <button>Observable Button</button> <br>
+    Count: <div id="count">0</div>
+    <input type="text">
 
-    </p>
 
     <script type="text/javascript">
-    let ob = Rx.Observable.of('foo', 'bar');
+      let ob = Rx.Observable.of('foo', 'bar');
 
-    let obButton = Rx.Observable.fromEvent(
-      document.querySelector
-    ('button'), 'click', function(a){console.log('hi', a)});
+      const button = document.querySelector('button');
+      Rx.Observable.fromEvent(button, 'click')
+        .scan(count => count + 1, 0)
+        .subscribe(count => {
+          console.log('count', count)
+          let $count = document.querySelector('#count')
+          $count.innerHTML = count;
+          console.log('$count', $count);
+        });
 
-    var input = Rx.Observable.fromEvent(document.querySelector('input'), 'input');
+      Rx.Observable.fromEvent(
+        document.querySelector
+      ('button'), 'click', function(a){console.log('hi', a)});
 
-    // input.map(event => event.target.value)
-    //   .subscribe(value => console.log('hi'));
+      const input = Rx.Observable.fromEvent(
+        document.querySelector('input'),
+        'input'
+      );
 
-    input.map(
-      (event, index) => {
-        console.log('event', event);
-        console.log('event.target.value', event.target.value);
-        console.log('index', index);
-        return event;
-      }
-    )
-      .subscribe(value => console.log('value', value.data));
+      // input.map(event => event.target.value)
+      //   .subscribe(value => console.log('hi'));
+
+      input.map(
+        (event, index) => {
+          console.log('event', event);
+          console.log('event.target.value', event.target.value);
+          console.log('index', index);
+          return event;
+        }
+      )
+        .subscribe(value => console.log('value', value.data));
+
+
     </script>
   </body>
 </html>
