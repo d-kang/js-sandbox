@@ -11,51 +11,71 @@
 
     <script crossorigin src="https://unpkg.com/react@16/umd/react.development.js"></script>
     <script crossorigin src="https://unpkg.com/react-dom@16/umd/react-dom.development.js"></script>
-    <script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
+    <script src="https://unpkg.com/babel-standalone@6/babel.js"></script>
     <script src="https://unpkg.com/@reactivex/rxjs@5.0.0/dist/global/Rx.js" charset="utf-8"></script>
 
 
     <script type="text/babel">
     const getRatings = [
-      {rating: 5, title:'spiderman'},
-      {rating: 5, title: 'wolverine'},
-      {rating: 5, title: 'guardians'},
-      {rating: 3, title: 'batman v superman'},
-      {rating: 3, title: 'suicide squad'},
-      {rating: 3, title: 'guardians'},
+      {rating: 5, title: 'spiderman', genre:'action'},
+      {rating: 5, title: 'wolverine', genre:'action'},
+      {rating: 5, title: 'guardians', genre:'action'},
+      {rating: 3, title: 'batman v superman', genre:'action'},
+      {rating: 3, title: 'suicide squad', genre:'action'},
+      {rating: 3, title: 'guardians', genre:'action'},
+      {rating: 5, title: 'somemovie', genre:'comedy'},
     ]
 
     class App extends React.Component {
       state = {
+        recommendations: [],
         fiveStar: [],
       }
 
       componentDidMount() {
         this.setState(
           {
-            fiveStar: [...this.state.fiveStar, ...getRatings]
+            recommendations: [...this.state.recommendations, ...getRatings]
           }
         );
       }
-
+      myStore = []
       buttonClick = () => {
-        console.log('this.state.count', this.state.count);
-        console.log('this.state.fiveStar', this.state.fiveStar);
-        const action = {
-          value: this.state.count + 1,
-        }
-        console.log('action', action);
-        const fiveStar = [...this.state.fiveStar, action];
-        console.log('fiveStar', fiveStar);
-        this.setState({ fiveStar });
-        const obs = Rx.Observable.from(fiveStar);
+        // this.setState({ fiveStar: [] });
+        const obs = Rx.Observable.from(this.state.recommendations);
         obs
           // .take(10)
-          .map(e => e.value)
-          .filter(count => count % 2)
-          .subscribe(count => {
-            console.log('count', count);
+          .map(film => film)
+          .filter(film => film.rating === 5 && film.genre === 'action')
+          .subscribe(fiveStar => {
+            console.log('fiveStar', fiveStar);
+            console.log('this.state.fiveStar', this.state.fiveStar);
+            // this.setState({fiveStar: [...this.state.fiveStar, fiveStar]}, () => {console.log('this.state.fiveStar', this.state.fiveStar)});
+
+            this.myStore.push(fiveStar)
+            this.setState({fiveStar: [...this.myStore]}, () => {
+              this.myStore = [];
+            })
           });
+
+
+        // console.log('this.state.count', this.state.count);
+        // console.log('this.state.fiveStar', this.state.fiveStar);
+        // const action = {
+        //   value: this.state.count + 1,
+        // }
+        // console.log('action', action);
+        // const fiveStar = [...this.state.fiveStar, action];
+        // console.log('fiveStar', fiveStar);
+        // this.setState({ fiveStar });
+        // const obs = Rx.Observable.from(fiveStar);
+        // obs
+        //   // .take(10)
+        //   .map(e => e.value)
+        //   .filter(count => count % 2)
+        //   .subscribe(count => {
+        //     console.log('count', count);
+        //   });
       }
       render() {
         return (
@@ -74,10 +94,10 @@
             </button>
             <br />
             <div>
-            {this.state.fiveStar.map(movie =>
-              <div>
-                {`Title: ${movie.title}`} <br/>
-                {`Rating: ${movie.rating}`}
+            {this.state.fiveStar.map((film, i) =>
+              <div key={i}>
+                {`Title: ${film.title}`} <br/>
+                {`Rating: ${film.rating}`}
               </div>
             )}
             </div>
