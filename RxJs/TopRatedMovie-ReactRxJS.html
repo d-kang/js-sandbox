@@ -22,23 +22,22 @@
       {rating: 5, title: 'guardians', genre:'action'},
       {rating: 3, title: 'batman v superman', genre:'action'},
       {rating: 3, title: 'suicide squad', genre:'action'},
-      {rating: 3, title: 'guardians', genre:'action'},
-      {rating: 5, title: 'somemovie', genre:'comedy'},
+      {rating: 5, title: 'somemovie1', genre:'thriller'},
+      {rating: 5, title: 'somemovie2', genre:'comedy'},
     ]
 
     class App extends React.Component {
       state = {
-        recommendations: getRatings,
+        recommendations: [],
         fiveStar: [],
       }
 
       componentDidMount() {
-        this.setState(
-          {
-            recommendations: [...this.state.recommendations, ...getRatings]
-          }
-        );
-        this.updateFiveStar();
+        const recommendations =  [
+          ...this.state.recommendations,
+          ...getRatings
+        ];
+        this.setState({ recommendations }, () => { this.updateFiveStar() });
       }
 
       myStore = []
@@ -55,6 +54,7 @@
           });
       }
       buttonClick = () => {
+        console.log('button clicked')
         const updates = [
           {rating: 5, title: 'avengers', genre:'action'},
           {rating: 2, title: 'justice league', genre:'action'},
@@ -62,9 +62,15 @@
           {rating: 5, title: 'black panther', genre:'action'},
           {rating: 4, title: 'ant man', genre:'action'},
           {rating: 3, title: 'venom', genre:'action'},
-          {rating: 5, title: 'star wars', genre:'comedy'},
+          {rating: 5, title: 'star wars', genre:'action'},
         ]
-        this.setState({recommendations: [...this.state.recommendations, updates]})
+
+        const recommendations = [...this.state.recommendations, ...updates];
+        console.log('recommendations', recommendations);
+        this.setState({ recommendations }, () => {
+          this.myStore = []
+          this.updateFiveStar();
+        })
       }
       render() {
         return (
@@ -75,11 +81,6 @@
               onClick={this.buttonClick}
             >
               Observable Button
-            </button>
-            <button
-              onClick={this.addNumber}
-            >
-            Add Number
             </button>
             <br />
             <div>
