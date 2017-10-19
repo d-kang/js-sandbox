@@ -17,13 +17,15 @@
 
     <script type="text/babel">
     const getRatings = [
-      {rating: 5, title: 'spiderman', genre:'action'},
-      {rating: 5, title: 'wolverine', genre:'action'},
-      {rating: 5, title: 'guardians', genre:'action'},
-      {rating: 3, title: 'batman v superman', genre:'action'},
-      {rating: 3, title: 'suicide squad', genre:'action'},
-      {rating: 5, title: 'somemovie1', genre:'thriller'},
-      {rating: 5, title: 'somemovie2', genre:'comedy'},
+      [
+        {rating: 5, title: 'spiderman', genre:'action'},
+        {rating: 5, title: 'wolverine', genre:'action'},
+        {rating: 5, title: 'guardians', genre:'action'},
+        {rating: 3, title: 'batman v superman', genre:'action'},
+        {rating: 3, title: 'suicide squad', genre:'action'},
+        {rating: 5, title: 'somemovie1', genre:'thriller'},
+        {rating: 5, title: 'somemovie2', genre:'comedy'},
+      ],
     ]
 
     class App extends React.Component {
@@ -44,6 +46,7 @@
       updateFiveStar() {
         const obs = Rx.Observable.from(this.state.recommendations);
         obs
+          .concatAll()
           .map(film => film)
           .filter(film => film.rating === 5 && film.genre === 'action')
           .subscribe(fiveStar => {
@@ -65,7 +68,7 @@
           {rating: 5, title: 'star wars', genre:'action'},
         ]
 
-        const recommendations = [...this.state.recommendations, ...updates];
+        const recommendations = [...this.state.recommendations, [...updates]];
         console.log('recommendations', recommendations);
         this.setState({ recommendations }, () => {
           this.myStore = []
