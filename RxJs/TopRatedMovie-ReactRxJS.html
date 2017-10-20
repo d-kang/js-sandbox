@@ -44,17 +44,19 @@
 
       myStore = []
       updateFiveStar() {
+        const arr = [...this.state.fiveStar]
         const obs = Rx.Observable.from(this.state.recommendations);
         obs
           .concatAll()
           .map(film => film)
-          .filter(film => film.rating === 5 && film.genre === 'action')
-          .subscribe(fiveStar => {
-            this.myStore.push(fiveStar)
-            this.setState({fiveStar: [...this.myStore]}, () => {
-              this.myStore = [];
-            })
-          });
+          .filter(({rating, genre}) => rating === 5 && genre === 'action')
+          // .subscribe(fiveStar => {
+          //   this.myStore.push(fiveStar)
+          //   this.setState({fiveStar: [...this.myStore]}, () => {
+          //     this.myStore = [];
+          //   })
+          // });
+          .forEach(({title}) => this.setState({fiveStar: [...arr, title]}))
       }
       buttonClick = () => {
         console.log('button clicked')
@@ -89,8 +91,9 @@
             <div>
             {this.state.fiveStar.map((film, i) =>
               <div key={i}>
-                {`Title: ${film.title}`} <br/>
-                {`Rating: ${film.rating}`}
+                // {`Title: ${film.title}`} <br/>
+                // {`Rating: ${film.rating}`}
+                {`Title: ${film}`}
               </div>
             )}
             </div>
