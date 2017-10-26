@@ -50,13 +50,18 @@
           .concatAll()
           .map(film => film)
           .filter(({rating, genre}) => rating === 5 && genre === 'action')
-          // .subscribe(fiveStar => {
-          //   this.myStore.push(fiveStar)
-          //   this.setState({fiveStar: [...this.myStore]}, () => {
-          //     this.myStore = [];
-          //   })
-          // });
-          .forEach(({title}) => this.setState({fiveStar: [...arr, title]}))
+          .subscribe(fiveStar => {
+            this.myStore.push(fiveStar)
+            this.setState({fiveStar: [...this.myStore]}, () => {
+              this.myStore = [];
+            },
+            err => console.error('error', err),
+            () => console.info('complete!')
+          )
+          })
+          .complete(() => console.info('complete!'))
+          ;
+          // .forEach(({title}) => this.setState({fiveStar: [...arr, title]}))
       }
       buttonClick = () => {
         console.log('button clicked')
@@ -69,13 +74,18 @@
           {rating: 3, title: 'venom', genre:'action'},
           {rating: 5, title: 'star wars', genre:'action'},
         ]
-
         const recommendations = [...this.state.recommendations, [...updates]];
         console.log('recommendations', recommendations);
-        this.setState({ recommendations }, () => {
-          this.myStore = []
-          this.updateFiveStar();
-        })
+        var self = this
+        // setInterval(() => {
+        //   self.setState({ recommendations }, () => {
+        //     // this.myStore = []
+        //     this.updateFiveStar();
+        //   })
+        // }, 3000);
+
+
+
       }
       render() {
         return (
@@ -91,9 +101,8 @@
             <div>
             {this.state.fiveStar.map((film, i) =>
               <div key={i}>
-                // {`Title: ${film.title}`} <br/>
-                // {`Rating: ${film.rating}`}
-                {`Title: ${film}`}
+                {`Title: ${film.title}`} <br/>
+                {`Rating: ${film.rating}`}
               </div>
             )}
             </div>

@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Listing 5.1</title>
+  <script src="https://unpkg.com/@reactivex/rxjs/dist/global/Rx.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/ramda/0.22.1/ramda.min.js"></script>
+</head>
+<body>
+
+</body>
+
+  <script>
+    // get observable from Rx lib
+    const { Observable } = Rx;
+
+    // create a collection to iterate over
+    const list = [1, 2, 3, 4, 5]
+
+    // create an observable from the collection
+    const myObservableStream = Observable.from(list)
+
+    // takes three functions or a class with three methods
+    // create observer class
+    class myObserver {
+      next(thing) {
+        console.log('thing', thing)
+      }
+      error(err) {
+        console.log('err', err);
+      }
+      complete() {
+        console.log('complete')
+      }
+
+    }
+    // have an observer subscribe to observable
+    // myObservableStream.subscribe(new myObserver)
+
+
+    // you can have more than one obersver
+
+    // how can we log only the odds?
+
+    // how can we then add 2 to each?
+    myObservableStream
+      .filter(a => a % 2 === 0)
+      .map(a => a + 2)
+      .subscribe(new myObserver)
+
+  </script>
+</html>
