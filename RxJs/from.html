@@ -35,7 +35,10 @@
 
     }
     // have an observer subscribe to observable
-    // myObservableStream.subscribe(new myObserver)
+    myObservableStream
+      .filter(a => a % 2 === 0)
+      .map(a => 2 + a)
+      .subscribe(new myObserver)
 
 
     // you can have more than one obersver
@@ -43,10 +46,7 @@
     // how can we log only the odds?
 
     // how can we then add 2 to each?
-    myObservableStream
-      .filter(a => a % 2 === 0)
-      .map(a => a + 2)
-      .subscribe(new myObserver)
+
 
   </script>
 </html>
