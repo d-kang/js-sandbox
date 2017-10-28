@@ -9,16 +9,20 @@ class Car {
   stop() {
     console.log("Engine stopped: " + this.engine);
   }
+
+  continue = () => {
+    console.log('checking arrow funcs');
+  }
 }
 
 console.log('hi!')
 
 var num1: number = 5;
 
-var num: string = 5;
 
 window.onload = function() {
   var car = new Car("V8");
   car.start();
   car.stop();
+  car.continue();
 };
