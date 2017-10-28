@@ -14,7 +14,7 @@ var App = /** @class */ (function (_super) {
     function App(props) {
         var _this = _super.call(this, props) || this;
         _this.state = {
-            start: _this.props.start
+            start: _this.props.start,
         };
         console.log('props', _this);
         return _this;
@@ -25,14 +25,15 @@ var App = /** @class */ (function (_super) {
         this.props.timer(start, this.setState.bind(this));
     };
     App.prototype.render = function () {
-        return (React.createElement("div", null,
-            React.createElement("div", null, this.props.message),
-            React.createElement("div", null, this.state.start)));
+        return (<div>
+        <div>{this.props.message}</div>
+        <div>{this.state.start}</div>
+      </div>);
     };
     return App;
 }(React.Component));
-ReactDOM.render(React.createElement(App, { message: "Hello World!", start: 0, timer: function (start, cb) {
-        return setInterval(function () {
-            return cb({ start: start++ });
-        }, 1000);
-    } }), document.getElementById('root'));
+ReactDOM.render(<App message="Hello World!" start={0} timer={function (start, cb) {
+    return setInterval(function () {
+        return cb({ start: start++ });
+    }, 1000);
+}}/>, document.getElementById('root'));

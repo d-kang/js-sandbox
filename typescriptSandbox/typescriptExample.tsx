@@ -1,14 +1,16 @@
-class App extends React.Component {
-  constructor(props: {message:string, start:number, timer:void}) {
+// props: {message:string, start:number, timer:void}
+class App extends React.Component<any, any>{
+  constructor(props) {
     super(props);
+    console.log('props', this)
   }
 
   state = {
     start: this.props.start,
   }
-  componentDidMount() {
-    console.log('start', this.props.start)
-    const start = this.props.start
+  public componentDidMount() {
+    console.log('start', this.props.start);
+    const start = this.props.start;
     this.props.timer(start, this.setState.bind(this));
   }
   render() {
