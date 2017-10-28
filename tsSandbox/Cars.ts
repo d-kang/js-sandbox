@@ -4,12 +4,18 @@ class Car {
     this.engine = engine;
   }
   start() {
-    alert("Engine Started: " + this.engine);
+    console.log("Engine Started: " + this.engine);
   }
   stop() {
-    alert("Engine stopped: " + this.engine);
+    console.log("Engine stopped: " + this.engine);
   }
 }
+
+console.log('hi!')
+
+var num1: number = 5;
+
+var num: string = 5;
 
 window.onload = function() {
   var car = new Car("V8");
