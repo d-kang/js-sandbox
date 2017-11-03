@@ -1,9 +1,15 @@
-var x: number = 1;
-var y;
+// type saftey at compile time
 
-var firstName = 'David';
-var lastName: string = 'Kang';
+var person;
+person = 'David Kang';
+const findName = person.substring(1,5)
+console.log('findName', findName);
 
+
+
+
+
+// functions
 var num1 = 100;
 var num2: number = 20;
 
