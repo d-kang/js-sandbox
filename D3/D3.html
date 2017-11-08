@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title></title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/4.11.0/d3.js" charset="utf-8"></script>
+  </head>
+  <body>
+    <svg>
+      <rect />
+      <rect />
+      <rect />
+      <rect />
+      <rect />
+    </svg>
+
+    <script>
+      const rectWidth = 100;
+      const height = 300;
+      const data = [100, 250, 175, 200, 120];
+      const selected = d3.selectAll('rect');
+      console.log('selected', selected);
+      selected
+        .data(data)
+        .attr('x', (d, i) => i * rectWidth)
+        .attr('y', d => height - d)
+        .attr('width', rectWidth)
+        .attr('height', d => d)
+        .attr('fill', 'blue')
+        .attr('stroke', '#fff');
+    </script>
+  </body>
+</html>
